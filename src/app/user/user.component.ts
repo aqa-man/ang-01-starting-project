@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output, output } from '@angular/core';
-import { computed, input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { type User } from './user.model';
 
 @Component({
   selector: 'app-user',
@@ -10,25 +10,16 @@ import { computed, input } from '@angular/core';
 })
 export class UserComponent {
   // decorator approach
-  @Input({ required: true }) id!: string;
-  @Input({ required: true }) avatar!: string;
-  @Input({ required: true }) name!: string;
+  @Input({ required: true }) user!: User;
+  @Input({ required: true }) selected!: boolean;
   @Output() select = new EventEmitter<string>();
   // select = output<string>();
 
   get imagePath() {
-    return 'assets/users/' + this.avatar;
+    return 'assets/users/' + this.user.avatar;
   }
 
   onSelectUser() {
-    this.select.emit(this.id);
+    this.select.emit(this.user.id);
   }
-
-  // signal approach --> must call as a function with ()'s
-  // avatar = input.required<string>();
-  // name = input.required<string>();
-
-  // imagePath = computed(() => {
-  //   return 'assets/users/' + this.avatar();
-  // });
 }
